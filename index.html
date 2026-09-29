@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Roadmap Q4 2026 - TDA </title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<title>Roadmap Q4 2026 - TDA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Arrastrar y soltar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <!-- Supabase (cliente oficial) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
   /* ==== CONFIGURACIÓN: pega aquí los datos de tu proyecto Supabase ==== */
   window.ROADMAP_CONFIG = {
-    SUPABASE_URL: "https://tpjfmasgdmucrpfybjdd.supabase.co",
-    SUPABASE_ANON_KEY: "sb_publishable_mstRJV8kOVLYQrzF0y4iOA_23ua-6zI",
+    SUPABASE_URL: "https://TU-PROYECTO.supabase.co",
+    SUPABASE_ANON_KEY: "TU_ANON_KEY",
     ROADMAP_ID: "principal"   // cambia esto si quieres tener varios roadmaps separados
   };
 </script>
@@ -143,7 +145,7 @@ h2{font-family:"Bricolage Grotesque",Figtree,sans-serif;font-weight:700;font-siz
 .icon:hover{color:#C2410C;background:var(--field)}
 .tasks{padding:4px 14px 14px 30px;display:none}
 .tasks.open{display:block}
-.task{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-bottom:6px}
+.task{display:grid;grid-template-columns:auto auto 1fr auto;gap:8px;align-items:center;margin-bottom:6px}
 .task select{width:112px}
 .task.done .field.txt{text-decoration:line-through;color:var(--muted)}
 .addtask{display:flex;gap:8px;margin-top:8px}
@@ -168,6 +170,32 @@ h2{margin-bottom:10px}
 .donetag{display:inline-block;font-size:11px;font-weight:700;color:#137A5A;background:color-mix(in srgb,#1FA37A 16%,transparent);border-radius:999px;padding:1px 8px;margin-top:2px}
 .bar.done{opacity:.6;background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.35) 6px 10px)}
 .start .gap{white-space:nowrap}
+.handle{border:0;background:none;color:var(--muted);font-size:16px;line-height:1;padding:6px 3px;border-radius:5px;cursor:grab;touch-action:none;flex:0 0 auto}
+.handle:hover{color:var(--ink);background:var(--field)}
+.handle:active{cursor:grabbing}
+.viewmode .handle{display:none}
+.tlist{min-height:4px;border-radius:8px}
+.sortable-ghost{opacity:.35}
+.sortable-chosen{background:var(--surface)}
+.sortable-drag{box-shadow:0 8px 24px rgba(46,40,33,.18);border-radius:8px}
+.sprint.sortable-ghost{background:color-mix(in srgb,var(--today) 10%,transparent);opacity:.6}
+/* mientras se arrastra una tarea: cada sprint cerrado muestra una zona para soltar */
+.dragging-task .tasks:not(.open){display:block;padding:0 14px 10px 30px}
+.dragging-task .tasks:not(.open)>:not(.tlist){display:none}
+.dragging-task .tasks:not(.open) .tlist .task:not(.sortable-ghost){display:none}
+.dragging-task .tlist{min-height:38px;border:1.5px dashed color-mix(in srgb,var(--today) 45%,transparent);background:color-mix(in srgb,var(--today) 5%,transparent);position:relative}
+.dragging-task .tasks:not(.open) .tlist:empty::before,.dragging-task .tasks:not(.open) .tlist::before{content:attr(data-drop);position:absolute;left:12px;top:9px;font-size:12.5px;color:var(--today);font-weight:600;pointer-events:none}
+.dragging-task .tasks.open .tlist{padding:4px}
+.dragging-task .tasks .empty{display:none}
+.bar.now{z-index:2;font-weight:700;background:color-mix(in srgb,var(--bc) 38%,#FBF7F0);border-color:var(--bc);
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--bc) 35%,transparent),0 4px 14px color-mix(in srgb,var(--bc) 45%,transparent);animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 2px color-mix(in srgb,var(--bc) 30%,transparent),0 3px 10px color-mix(in srgb,var(--bc) 30%,transparent)}
+  50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--bc) 22%,transparent),0 6px 18px color-mix(in srgb,var(--bc) 55%,transparent)}}
+.sprint.now .srow{background:color-mix(in srgb,var(--pc) 12%,transparent);box-shadow:inset 4px 0 0 var(--pc)}
+.nowtag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--ink);background:color-mix(in srgb,var(--pc) 28%,transparent);border-radius:999px;padding:1px 9px;margin-top:2px}
+.nowtag i{width:7px;height:7px;border-radius:50%;background:var(--pc);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.bar.now,.nowtag i{animation:none}}
 .nolink{font-size:13px;color:var(--muted);display:none}
 .viewmode #addProduct,.viewmode [data-a="delP"],.viewmode [data-a="delS"],.viewmode [data-a="delT"],
 .viewmode .addsprint,.viewmode .addtask,.viewmode .hint,.viewmode .step button,.viewmode .color,.viewmode .link input,.viewmode .only-edit{display:none}
@@ -196,7 +224,7 @@ h2{margin-bottom:10px}
 <body>
 <div class="page">
   <header class="top">
-    <h1>Roadmap Q4 2026 - TDA </h1>
+    <h1>Roadmap Q4 2026 - TDA</h1>
     <p class="todaylbl"><span class="pulse"></span><span id="todayLbl"></span></p>
     <p class="sub">Octubre - Noviembre - Diciembre</p>
     <div class="tools">
@@ -244,6 +272,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const DAYS=[];for(let d=new Date(TL_START);d<=TL_END;d=addD(d,1))DAYS.push(d);
 const N=DAYS.length;
 const idxOf=d=>Math.round((d-TL_START)/864e5);
+const isNow=x=>!x.sp.done&&iso(x.start)<=iso(TODAY)&&iso(TODAY)<=iso(x.end);
 const calcToday=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate(),12)};
 let TODAY=calcToday();
 
@@ -333,7 +362,7 @@ function renderTimeline(){
       const ca=Math.max(0,a),cb=Math.min(N-1,b);
       const done=x.sp.tasks.filter(t=>t.status==='listo').length,tot=x.sp.tasks.length;
       const lab=esc(x.sp.name||'Sprint')+' · '+fmt(x.start)+' – '+fmt(x.end)+' · '+x.sp.days+' días hábiles';
-      h+='<button class="bar'+(x.sp.done?' done':'')+(b>N-1?' clip-r':'')+(a<0?' clip-l':'')+'" data-jump="'+x.sp.id+'" title="'+lab+'" aria-label="'+lab+'" style="left:'+(ca*dw+2)+'px;width:'+((cb-ca+1)*dw-4)+'px;top:'+(8+l*34)+'px;--bc:'+esc(p.color)+'"><span>'+(x.sp.done?'✓ ':'')+esc(x.sp.name||'Sprint')+'</span>'+(tot?'<em>'+done+'/'+tot+'</em>':'<em>'+x.sp.days+'d</em>')+(tot?'<i class="prog" style="width:'+(done/tot*100)+'%"></i>':'')+'</button>';
+      h+='<button class="bar'+(x.sp.done?' done':'')+(isNow(x)?' now':'')+(b>N-1?' clip-r':'')+(a<0?' clip-l':'')+'" data-jump="'+x.sp.id+'" title="'+lab+'" aria-label="'+lab+'" style="left:'+(ca*dw+2)+'px;width:'+((cb-ca+1)*dw-4)+'px;top:'+(8+l*34)+'px;--bc:'+esc(p.color)+'"><span>'+(x.sp.done?'✓ ':'')+esc(x.sp.name||'Sprint')+'</span>'+(tot?'<em>'+done+'/'+tot+'</em>':'<em>'+x.sp.days+'d</em>')+(tot?'<i class="prog" style="width:'+(done/tot*100)+'%"></i>':'')+'</button>';
     });
     h+='</div></div>';
   });
@@ -345,6 +374,7 @@ const panel=document.getElementById('panel');
 function computedHTML(x){
   const out=iso(x.end)>Q_END_ISO;
   if(x.sp.done)return '<div class="computed" id="c-'+x.sp.id+'">'+fmt(x.start)+' – '+fmt(x.end)+'<small><span class="donetag">✓ Terminado</span></small></div>';
+  if(isNow(x))return '<div class="computed" id="c-'+x.sp.id+'">'+fmt(x.start)+' – '+fmt(x.end)+'<small><span class="nowtag"><i></i>En curso</span></small></div>';
   return '<div class="computed'+(out?' warn':'')+'" id="c-'+x.sp.id+'">'+fmt(x.start)+' – '+fmt(x.end)+'<small>'+(out?'Termina después del 31 dic':'Termina el '+DIA_L[x.end.getDay()]+' '+fmt(x.end))+'</small></div>';
 }
 const DIA_L=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
@@ -359,11 +389,12 @@ function renderPanel(){
       '<input type="color" class="color" data-f="pcolor" value="'+esc(p.color)+'" aria-label="Color del producto">'+
       '<span class="pmeta">'+p.sprints.length+' sprint'+(p.sprints.length===1?'':'s')+'</span>'+
       '<button class="icon" data-a="delP" aria-label="Eliminar producto" title="Eliminar producto">✕</button></div>'+
-      '<div class="sprints">'+sch.map((x,k)=>sprintHTML(p,x,k)).join('')+
+      '<div class="sprints"><div class="slist">'+sch.map((x,k)=>sprintHTML(p,x,k)).join('')+'</div>'+
       '<div class="addsprint pactions"><button class="btn" data-a="addS">+ Sprint</button><button class="btn" data-a="repeat" title="Agrega sprints encadenados con la misma duración y pausa hasta fin de año">Repetir hasta diciembre</button></div></div>'+
       '</section>';
   }).join('');
   if(!editMode)panel.querySelectorAll('input,select,textarea').forEach(el=>el.disabled=true);
+  initSortables();
 }
 function sprintHTML(p,x,k){
   const sp=x.sp,open=openTasks.has(sp.id);
@@ -371,9 +402,9 @@ function sprintHTML(p,x,k){
     '<select class="field" data-f="mode" aria-label="Cómo inicia"><option value="date"'+(sp.mode==='date'?' selected':'')+'>En fecha</option><option value="after"'+(sp.mode==='after'?' selected':'')+'>Después del anterior</option></select>';
   const startCtl=(k===0||sp.mode==='date')?'<input type="date" class="field" data-f="start" value="'+esc(sp.start)+'" min="2026-09-01" max="2027-01-31" aria-label="Fecha de inicio">':
     '<span class="gap">pausa <input type="number" min="0" max="60" class="field" data-f="gap" value="'+(sp.gap|0)+'" aria-label="Días hábiles de pausa"> días háb.</span>';
-  return '<div class="sprint'+(sp.done?' done':'')+'" data-s="'+sp.id+'" id="s-'+sp.id+'">'+
+  return '<div class="sprint'+(sp.done?' done':'')+(isNow(x)?' now':'')+'" data-s="'+sp.id+'" id="s-'+sp.id+'">'+
     '<div class="srow">'+
-      '<div class="sname"><label class="check" title="Marcar sprint como terminado"><input type="checkbox" data-f="sdone"'+(sp.done?' checked':'')+' aria-label="Sprint terminado"><span></span></label><input class="field" data-f="sname" value="'+esc(sp.name)+'" aria-label="Nombre del sprint"></div>'+
+      '<div class="sname"><button class="handle shandle" aria-label="Arrastrar para mover el sprint" title="Arrastra para cambiar el orden del sprint">⠿</button><label class="check" title="Marcar sprint como terminado"><input type="checkbox" data-f="sdone"'+(sp.done?' checked':'')+' aria-label="Sprint terminado"><span></span></label><input class="field" data-f="sname" value="'+esc(sp.name)+'" aria-label="Nombre del sprint"></div>'+
       '<div class="start">'+modeSel+startCtl+'</div>'+
       '<div class="step"><button data-a="dec" aria-label="Un día menos">−</button><input type="number" min="1" max="120" data-f="days" value="'+sp.days+'" aria-label="Días hábiles"><span>días háb.</span><button data-a="inc" aria-label="Un día más">+</button></div>'+
       computedHTML(x)+
@@ -382,10 +413,12 @@ function sprintHTML(p,x,k){
       '<button class="icon" data-a="delS" aria-label="Eliminar sprint" title="Eliminar sprint">✕</button>'+
     '</div>'+
     '<div class="tasks'+(open?' open':'')+'">'+
-      (sp.tasks.length?sp.tasks.map(t=>'<div class="task'+(t.status==='listo'?' done':'')+'" data-t="'+t.id+'">'+
+      '<div class="tlist" data-drop="Soltar aquí para mover a '+esc(sp.name||'este sprint')+'">'+sp.tasks.map(t=>'<div class="task'+(t.status==='listo'?' done':'')+'" data-t="'+t.id+'">'+
+        '<button class="handle thandle" aria-label="Arrastrar tarea" title="Arrastra para mover la tarea">⠿</button>'+
         '<select class="field" data-f="tstatus" aria-label="Estado"><option value="pendiente"'+(t.status==='pendiente'?' selected':'')+'>Pendiente</option><option value="en curso"'+(t.status==='en curso'?' selected':'')+'>En curso</option><option value="listo"'+(t.status==='listo'?' selected':'')+'>Listo</option></select>'+
         '<input class="field txt" data-f="ttext" value="'+esc(t.text)+'" aria-label="Tarea">'+
-        '<button class="icon" data-a="delT" aria-label="Eliminar tarea">✕</button></div>').join(''):'<p class="muted">Sin tareas todavía.<span class="only-edit"> Escribe una y presiona Enter.</span></p>')+
+        '<button class="icon" data-a="delT" aria-label="Eliminar tarea">✕</button></div>').join('')+'</div>'+
+      (sp.tasks.length?'':'<p class="muted empty">Sin tareas todavía.<span class="only-edit"> Escribe una y presiona Enter, o arrastra tareas desde otro sprint.</span></p>')+
       '<div class="addtask"><textarea class="field newtask" data-f="newtask" rows="1" placeholder="Nueva tarea, o pega una lista (una por línea)" aria-label="Nueva tarea o lista de tareas"></textarea><button class="btn" data-a="addT">Agregar</button></div><p class="muted hint">Pega varias tareas juntas y se crea una por línea. Enter agrega, Shift + Enter hace salto de línea.</p>'+
     '</div></div>';
 }
@@ -510,6 +543,59 @@ try{const z=localStorage.getItem(KEY+'-dw');if(z)document.documentElement.style.
 
 /* ---------- persistence ---------- */
 const statusEl=document.getElementById('status');
+/* ---------- arrastrar y soltar ---------- */
+let sortables=[];
+function initSortables(){
+  sortables.forEach(x=>{try{x.destroy()}catch(e){}});sortables=[];
+  if(!editMode||typeof Sortable==='undefined')return;
+  panel.querySelectorAll('.slist').forEach(list=>{
+    const pid=list.closest('[data-p]').dataset.p;
+    sortables.push(Sortable.create(list,{handle:'.shandle',draggable:'.sprint',animation:160,group:'sprints-'+pid,
+      onEnd:ev=>{if(ev.oldIndex===ev.newIndex)return;moveSprint(pid,ev.oldIndex,ev.newIndex)}}));
+  });
+  panel.querySelectorAll('.tlist').forEach(list=>{
+    sortables.push(Sortable.create(list,{handle:'.thandle',draggable:'.task',animation:160,group:'tasks',emptyInsertThreshold:30,
+      onStart:()=>document.body.classList.add('dragging-task'),
+      onEnd:ev=>{
+        document.body.classList.remove('dragging-task');
+        const from=ev.from.closest('[data-s]').dataset.s,to=ev.to.closest('[data-s]').dataset.s;
+        if(from===to&&ev.oldIndex===ev.newIndex)return;
+        moveTask(from,ev.oldIndex,to,ev.newIndex);
+      }}));
+  });
+}
+const findSprint=id=>{for(const p of state.products){const sp=p.sprints.find(s=>s.id===id);if(sp)return {p,sp}}return {}};
+function moveTask(fromId,oi,toId,ni){
+  const a=findSprint(fromId).sp,b=findSprint(toId).sp;if(!a||!b)return renderAll();
+  const snap=JSON.stringify(state);
+  const [t]=a.tasks.splice(oi,1);if(!t)return renderAll();
+  b.tasks.splice(Math.min(ni,b.tasks.length),0,t);
+  openTasks.add(toId);
+  renderAll();persist();
+  undoSnap=snap;showToast(fromId===toId?'Tarea reordenada.':'Tarea movida a '+(b.name||'otro sprint')+'.');
+}
+function moveSprint(pid,oi,ni){
+  const p=P(pid);if(!p)return;
+  const snap=JSON.stringify(state);
+  // las fechas y pausas se quedan en su posición; el lote (tareas, duración, link, estado) se mueve
+  const slots=p.sprints.map(s=>({mode:s.mode,start:s.start,gap:s.gap,num:/^sprint\s*\d+$/i.test((s.name||'').trim())}));
+  const arr=p.sprints.slice();const [m]=arr.splice(oi,1);arr.splice(ni,0,m);
+  arr.forEach((sp,i)=>{
+    sp.mode=slots[i].mode;sp.start=slots[i].start;sp.gap=slots[i].gap;
+    if(/^sprint\s*\d+$/i.test((sp.name||'').trim()))sp.name='Sprint '+(i+1);
+  });
+  if(arr[0])arr[0].mode='date';
+  p.sprints=arr;
+  renderAll();persist();
+  undoSnap=snap;showToast('Sprint movido. Las fechas se recalcularon.');
+  const el=document.getElementById('s-'+m.id);if(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
+}
+function showToast(msg){
+  document.getElementById('toastMsg').textContent=msg;
+  const t=document.getElementById('toast');t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),6000);
+}
+
 /* ---------- modo vista / edición ---------- */
 const editBtn=document.getElementById('editBtn');
 function setMode(v){
@@ -541,7 +627,7 @@ function scrollToToday(smooth){
 }
 function checkDay(){
   const t=calcToday();
-  if(iso(t)!==iso(TODAY)){TODAY=t;renderTimeline();updateTodayLabel();scrollToToday(true)}
+  if(iso(t)!==iso(TODAY)){TODAY=t;renderAll();updateTodayLabel();scrollToToday(true)}
 }
 setInterval(checkDay,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkDay()});
